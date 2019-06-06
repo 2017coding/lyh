@@ -6,11 +6,13 @@
         v-for="(item, index) in componentsList"
         :key="index"
         :background="item.background"
+        @handleClick="handleClick"
       />
     </div>
-    <ul class="dot-box">
+    <ul v-if="addr !== 0" class="dot-box">
       <li v-for="(item, index) in componentsList" :key="index">
         <i
+          v-if="index > 0"
           :style="{'background-image': index === Math.abs(addr) ? componentsList[index].background : ''}"
           :class="{dot: true, 'dot-active': index === Math.abs(addr)}"
           @click="handleClick('clickDot', -index)"
@@ -68,6 +70,7 @@ export default {
     listenMousewheel () {
       const box = this.$refs.box
       document.onmousewheel = e => {
+        console.log(this.flag)
         if (!this.flag) return
         e = e || window.event
         if (e.wheelDelta) { // 判断浏览器IE，谷歌滑轮事件
@@ -76,7 +79,9 @@ export default {
             this.addr++
           }
           if (e.wheelDelta < 0) { // 当滑轮向下滚动时
-            this.addr--
+            if (this.addr !== 0) {
+              this.addr--
+            }
           }
         } else if (e.detail) { // Firefox滑轮事件
           this.flag = false
@@ -84,7 +89,9 @@ export default {
             this.addr++
           }
           if (e.detail < 0) { // 当滑轮向下滚动时
-            this.addr--
+            if (this.addr !== 0) {
+              this.addr--
+            }
           }
         }
         setTimeout(() => {
@@ -120,13 +127,13 @@ export default {
   }
   .dot-box{
     position: fixed;
-    right: 40px;
-    bottom: 20px;
+    right: 20px;
+    bottom: 10px;
     .dot{
       margin-bottom: 5px;
       display: inline-block;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background: rgba(0, 0, 0, .2);
       cursor: pointer;

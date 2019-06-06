@@ -1,6 +1,6 @@
 <template>
   <div class="component" :style="'background-image:' + background">
-    1
+    博客
   </div>
 </template>
 

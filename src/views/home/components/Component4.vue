@@ -1,6 +1,6 @@
 <template>
   <div class="component" :style="'background-image:' + background">
-    1
+    个人信息
   </div>
 </template>
 
